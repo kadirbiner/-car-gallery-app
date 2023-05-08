@@ -1,0 +1,181 @@
+#include <iostream>
+#include <string.h>
+
+using namespace std;
+
+
+
+
+struct arac
+{
+	string marka;
+	string model;
+	string hasar_durumu;
+	int model_yili;
+};
+
+arac arabalar[100];
+int dizi_kontrol = 0;
+void aracListele();
+void aracEkle(arac a);
+bool aracSil(string  a, string b);
+
+
+
+
+int main()
+{
+	setlocale(LC_ALL, "turkish");//Türkçe karakter için kullandım.
+
+
+	arac araba;
+
+	cout <<endl<< "**************  OTOMOTİV ŞİRKETİ A.Ş.************"<<endl;
+
+	int secim=0;
+
+	do
+	{
+		
+		
+		cout << "1-Araç ekle" << endl;
+		cout << "2-Araç sil" << endl;
+		cout << "3-Araçları listele" << endl;
+		cout << "Çıkış yapmak için lütfen (-1) basınız."<<endl<<endl;
+		cout << "Lütfen yapmak istediğiniz işlemi seçiniz:";
+		cin >> secim;
+
+		switch (secim)
+		{
+		case 1:
+		{
+			cout << endl << "********** Araç ekleme ekranı **********" << endl;
+			cout << "Araç markasını giriniz:";
+			cin >> araba.marka;
+			cout << endl;
+			cout << "Araç modelini giriniz:";
+			cin >> araba.model;
+			cout << endl;
+			cout << "Araç model yılını giriniz:";
+			cin >> araba.model_yili;
+			cout << endl;
+			cout << "Araç hasar durumunu giriniz:";
+			cin >> araba.hasar_durumu;
+			cout << endl;
+		
+			aracEkle(araba);
+
+			cout << "Araç başarıyla eklendi."<<endl;
+			break;
+		
+		}
+			
+		case 2:
+		{
+			string arac_marka;
+			string arac_model;
+
+			cout << endl << "********** Araç silme  ekranı **********" << endl;
+			cout << "silmek istediğiniz Aracın markasını giriniz:";
+			cin >> arac_marka;
+			cout << endl;
+			cout << "silmek istediğiniz Aracın modelini giriniz:";
+			cin >> arac_model;
+			cout << endl;
+
+			bool sonuc = false;
+
+			sonuc = aracSil( arac_marka , arac_model);
+
+			if (sonuc == true)
+			{
+				cout << "Araç başarıyla silindi."<<endl<<endl;
+			}
+			else
+			{
+				cout << "Verdiğiniz bilgilere göre bir araç bulunamadı."<<endl<<endl;
+			}
+			break;
+		}
+			
+		case 3:
+		{
+			aracListele();
+			break;
+
+
+
+
+
+		}
+		default :
+		{
+			if(secim !=-1)
+			cout << "Yanlış seçim yaptınız lütfen tekrar deneyiniz."<<endl;
+			break;
+		}
+
+		
+		}
+
+	} while (secim!=-1);
+
+	if (secim == -1)
+	{
+		cout << "Program sonlandırılmıştır."<<endl;
+	}
+
+
+
+
+	return 0;
+}
+
+void aracEkle(arac a)
+{
+	arabalar[dizi_kontrol].marka = a.marka;
+	arabalar[dizi_kontrol].model = a.model;
+	arabalar[dizi_kontrol].hasar_durumu = a.hasar_durumu;
+	arabalar[dizi_kontrol].model_yili = a.model_yili;
+
+	dizi_kontrol++;
+
+	
+}
+
+bool aracSil(string a, string b)
+{
+	//a -> araç markası
+	//b -> arac modeli
+
+	for (int i = 0; i < dizi_kontrol; i++)
+	{
+		if (arabalar[i].marka == a && arabalar[i].model == b)
+		{
+			arabalar[i].marka = " ";
+			arabalar[i].model = " ";
+			arabalar[i].hasar_durumu = " ";
+			arabalar[i].model_yili = 0;
+
+			return true;
+			
+		}
+	}
+	
+	return false;
+
+}
+
+void aracListele()
+{
+	for (int j = 0; j < dizi_kontrol; j++)
+	{
+		cout << "========================="<<endl;
+		cout << "Arac markası:" << arabalar[j].marka<<endl;
+		cout << "Arac modeli:" << arabalar[j].model<< endl;
+		cout << "Arac hasar durumu:" << arabalar[j].hasar_durumu<< endl;
+		cout << "Arac model yılı:" << arabalar[j].model_yili << endl;
+		cout << "=========================" << endl;
+
+	}
+}
